@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:managerapp/core/constants/app_config.dart';
 import 'package:managerapp/core/errors/app_exception.dart';
+import 'package:managerapp/core/errors/error_translator.dart';
 import 'package:managerapp/core/utils/token_storage.dart';
 import 'package:managerapp/login/domain/model/user.dart';
 
@@ -77,7 +78,7 @@ class AuthRepository {
       final detail = body['detail'];
 
       if (detail is String && detail.isNotEmpty) {
-        return detail;
+        return ErrorTranslator.translate(detail, response.statusCode);
       }
 
       if (detail is List && detail.isNotEmpty) {
@@ -85,13 +86,13 @@ class AuthRepository {
         if (first is Map<String, dynamic>) {
           final message = first['msg'];
           if (message is String && message.isNotEmpty) {
-            return message;
+            return ErrorTranslator.translate(message, response.statusCode);
           }
         }
       }
     } catch (_) {
       // Ignore parse errors and fall back to status code.
     }
-    return 'Erro ${response.statusCode} ao comunicar com a API.';
+    return ErrorTranslator.translate('', response.statusCode);
   }
 }
