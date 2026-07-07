@@ -31,12 +31,6 @@ Após reinstalar o app:
 [APP]  Volta a gerar códigos TOTP offline
 ```
 
-## O que o app NÃO faz
-
-- Não chama `POST /totp/setup` nem `POST /totp/verify-setup` (responsabilidade do site)
-- Não envia o secret de volta para a API
-- Não gera código TOTP via rede (100% offline após o secret estar salvo)
-
 ## Requisitos
 
 - Flutter SDK ^3.11.5
@@ -49,7 +43,7 @@ Edite a URL da API em [`lib/core/constants/app_config.dart`](lib/core/constants/
 
 ```dart
 // Produção (Render)
-static const String apiBaseUrl = 'https://totp-server-gqoo.onrender.com';
+static const String apiBaseUrl = '';
 
 // Dev emulador Android
 // static const String apiBaseUrl = 'http://10.0.2.2:7070';
